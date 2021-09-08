@@ -8,6 +8,7 @@ echo "cur dir is: " $curdir
 
 ls -l
 ls -l ..
-ls -l ../..
+
+git status
 
 env | sort
