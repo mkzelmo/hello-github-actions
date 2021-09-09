@@ -10,5 +10,5 @@ jobs:
       - uses: ./action-a
       - uses: ./action-a
         with:
-          MY_NAME: "Mona Lisa"
+          MY_NAME: "Mona Lisa Smile"
           
