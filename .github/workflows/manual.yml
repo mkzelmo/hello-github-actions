@@ -34,3 +34,6 @@ jobs:
     # Runs a single command using the runners shell
     - name: Send greeting
       run: echo "${{ github.event.inputs.ProductVersion }} , ${{ github.event.inputs.BuildNumber }} , ${{ github.event.inputs.Stage }}"
+    - name: print env
+      run: env | sort
+      
