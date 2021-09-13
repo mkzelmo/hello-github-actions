@@ -31,6 +31,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "${{ github.event.inputs.ProductVersion }} , ${{ github.event.inputs.BuildNumber }} , ${{ github.event.inputs.Stage }}"
+      # Runs a single command using the runners shell
+      - name: Send greeting
+        run: |
+          echo "${{ github.event.inputs.ProductVersion }} , ${{ github.event.inputs.BuildNumber }} , ${{ github.event.inputs.Stage }}"
+          echo zz
+        
