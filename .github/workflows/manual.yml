@@ -31,17 +31,19 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Get version from Branch name
-    - name: Our Inputs
-      run: |
-        echo "ProductVersion: ${{ github.event.inputs.ProductVersion }}"
-        echo "BuildNumber: ${{ github.event.inputs.BuildNumber }}"
-        echo "Stage: ${{ github.event.inputs.Stage }}"
-        echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-        echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-    - name: version from Branch
-      run: |
-        ver=`echo ${{ github.ref }}`
-        echo "ver: $ver"
-        
+      # Get version from Branch name
+      - name: Our Inputs
+        run: |
+          echo "ProductVersion: ${{ github.event.inputs.ProductVersion }}"
+          echo "BuildNumber: ${{ github.event.inputs.BuildNumber }}"
+          echo "Stage: ${{ github.event.inputs.Stage }}"
+          echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+          echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: version from Branch
+        run: |
+          ver=`echo ${{ github.ref }}`
+          echo "ver: $ver"
+      - name: print env
+        run: env | sort        
+
       
