@@ -41,7 +41,7 @@ jobs:
           echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: version from Branch
         run: |
-          ver=`echo ${{ github.ref }}`
+          ver=`echo ${{ github.ref }} | sed -n -e "s/^refs\/heads\/\(.*\)$/\1/p"`
           echo "ver: $ver"
       - name: print env
         run: env | sort        
