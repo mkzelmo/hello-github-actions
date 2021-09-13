@@ -46,7 +46,12 @@ jobs:
           echo "ver_from_branch=$ver" >> $GITHUB_ENV
       - name: print env
         run: env | sort        
-      - name: Env Var version from Branch
+      - name: Env Var ver_from_branch
         run: |
           echo "ver_from_branch: ${{ env.ver_from_branch }}" 
-      
+      - name: Check versions match
+        if: ${{ env.ver_from_branch != github.event.inputs.ProductVersion }}
+        run: |
+          exit 1
+      - name: vers match
+        run: echo "vers match"
