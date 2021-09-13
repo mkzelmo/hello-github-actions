@@ -79,7 +79,7 @@ jobs:
         run: |
           P_V=${{github.event.inputs.ProductVersion }}
           export P_V
-          echo "P_V=$P_V" >> $GITHUB_ENV"
+          echo "P_V=$P_V" >> $GITHUB_ENV
           
       - name: P_V
         run: echo "P_V:${{ env.P_V }}"
