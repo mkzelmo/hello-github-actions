@@ -10,7 +10,7 @@ on:
     inputs:
       ProductVersion:
         # Friendly description to be shown in the UI
-        description: 'Product Version'
+        description: 'Product Version (Must be same as Branch Name)'
         # Input has to be provided for the workflow to run
         required: true
       BuildNumber:
@@ -20,7 +20,7 @@ on:
         required: true
       Stage:
         # Friendly description to be shown in the UI
-        description: 'Stage'
+        description: 'Stage (None=Alpha, Beta or Released)'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -43,7 +43,10 @@ jobs:
         run: |
           ver=`echo ${{ github.ref }} | sed -n -e "s/^refs\/heads\/\(.*\)$/\1/p"`
           echo "ver: $ver"
+          echo "ver_from_branch=$ver" >> $GITHUB_ENV
       - name: print env
         run: env | sort        
-
+      - name: Env Var version from Branch
+        run: |
+          echo "ver_from_branch: ${{ env.ver_from_branch }}" 
       
