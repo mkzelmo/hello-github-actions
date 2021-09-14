@@ -79,6 +79,8 @@ jobs:
         run: |
           pwd
           ls -l .
+          ls -l ./intelligencehub-runtime
+          ls -l ./intelligencehub-config
           ls -l ..
           ls -l ../..
           
