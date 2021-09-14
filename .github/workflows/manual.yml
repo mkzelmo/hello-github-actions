@@ -39,19 +39,49 @@ jobs:
           echo "Stage: ${{ github.event.inputs.Stage }}"
           echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
           echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      
       - name: version from Branch
         run: |
           ver=`echo ${{ github.ref }} | sed -n -e "s/^refs\/heads\/\(.*\)$/\1/p"`
           echo "ver: $ver"
           echo "ver_from_branch=$ver" >> $GITHUB_ENV
+      
       - name: print env
         run: env | sort        
+      
       - name: Env Var ver_from_branch
         run: |
           echo "ver_from_branch: ${{ env.ver_from_branch }}" 
+      
       - name: Check versions match
         if: ${{ env.ver_from_branch != github.event.inputs.ProductVersion }}
         run: |
+          echo "versions Don't match: ${{ env.ver_from_branch}} , ${{github.event.inputs.ProductVersion }}"
           exit 1
+      
       - name: vers match
         run: echo "vers match"
+      
+      - name: Checkout runtime
+        uses: actions/checkout@v2
+        with:
+          ref: ${{github.event.inputs.ProductVersion }}        
+          path: intelligencehub-runtime
+
+      - name: Checkout config
+        uses: actions/checkout@v2
+        with:
+          repository: mkzelmo/zello-world
+          ref: ${{github.event.inputs.ProductVersion }}        
+          path: intelligencehub-config
+      
+      - name: Set config params
+        run: |
+          P_V=${{github.event.inputs.ProductVersion }}
+          export P_V
+          echo "P_V=$P_V" >> $GITHUB_ENV
+          
+      - name: P_V
+        run: echo "P_V:${{ env.P_V }}"
+
+          
