@@ -66,20 +66,21 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{github.event.inputs.ProductVersion }}        
-          #path: intelligencehub-runtime
+          path: intelligencehub-runtime
 
       - name: Checkout config
         uses: actions/checkout@v2
         with:
           repository: mkzelmo/zello-world
           ref: ${{github.event.inputs.ProductVersion }}        
-          #path: intelligencehub-config
+          path: intelligencehub-config
       
       - name: looks at dirs
         run: |
           pwd
           ls -l .
           ls -l ..
+          ls -l ../..
           
       - name: Set config params
         run: |
