@@ -92,7 +92,7 @@ jobs:
           echo "P_V=$P_V" >> $GITHUB_ENV
       
       - name: Check Alpha
-        if: ${{ github.event.inputs.Stage }} != 'Alpha'
+        if: ${{ github.event.inputs.Stage != 'Alpha' }}
         run: |
           echo "Tagin for ${{ github.event.inputs.Stage }}"
          
