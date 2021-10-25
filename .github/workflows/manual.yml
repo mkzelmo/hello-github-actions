@@ -5,6 +5,9 @@ name: Manual Build and Package workflow
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '0,10 * * * *'
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
@@ -12,6 +15,7 @@ on:
         # Friendly description to be shown in the UI
         description: 'Product Version (Must be same as Branch Name)'
         # Input has to be provided for the workflow to run
+        default: '99'
         required: true
       BuildNumber:
         # Friendly description to be shown in the UI
@@ -20,7 +24,7 @@ on:
         required: true
       Stage:
         # Friendly description to be shown in the UI
-        description: 'Stage (None=Alpha, Beta or Released)'
+        description: 'Stage (Alpha, Beta or Released)'
         default: "Alpha"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
