@@ -51,8 +51,8 @@ jobs:
           echo "ver: $ver"
           echo "ver_from_branch=$ver" >> $GITHUB_ENV
       
-      #- name: print env
-      #  run: env | sort        
+      - name: print env
+        run: env | sort        
       
       - name: Env Var ver_from_branch
         run: |
