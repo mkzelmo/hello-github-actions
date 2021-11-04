@@ -21,7 +21,7 @@ on:
         # Friendly description to be shown in the UI
         description: 'Build Number'
         # Input has to be provided for the workflow to run
-        default: ${{ env.GITHUB_RUN_NUMBER }}
+        default: "99"
         required: false
       Stage:
         # Friendly description to be shown in the UI
