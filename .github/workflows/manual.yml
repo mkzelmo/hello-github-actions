@@ -93,7 +93,8 @@ jobs:
       - name: P_V
         run: |
           echo "P_V:${{ env.P_V }}"
-          which dos2unix
+          cd ./intelligencehub-runtime
+          dos2unix -k ./file_1.txt
           
       - name: print env
         run: env | sort        
