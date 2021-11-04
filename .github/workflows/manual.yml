@@ -5,10 +5,10 @@ name: Manual Build and Package workflow
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
-  schedule:
+  #schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '0,59 * * * *'
-  
+   # - cron:  '9 9 * * 3'
+   
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
@@ -21,8 +21,8 @@ on:
         # Friendly description to be shown in the UI
         description: 'Build Number'
         # Input has to be provided for the workflow to run
-        default: '99'
-        required: true
+        default: ${{ env.GITHUB_RUN_NUMBER }}
+        required: false
       Stage:
         # Friendly description to be shown in the UI
         description: 'Stage (Alpha, Beta or Released)'
@@ -44,8 +44,57 @@ jobs:
           echo "ver: $ver"
           echo "ver_from_branch=$ver" >> $GITHUB_ENV
       
+      - name: Env Var ver_from_branch
+        run: |
+          echo "ver_from_branch: ${{ env.ver_from_branch }}" 
+      
+      - name: Check versions match
+        if: ${{ env.ver_from_branch != github.event.inputs.ProductVersion }}
+        run: |
+          echo "versions Don't match: ${{ env.ver_from_branch}} , ${{github.event.inputs.ProductVersion }}"
+          exit 1
+      
+      - name: vers match
+        run: echo "vers match"
+      
+      - name: Checkout runtime
+        uses: actions/checkout@v2
+        with:
+          ref: ${{github.event.inputs.ProductVersion }}        
+          path: intelligencehub-runtime
+
+      - name: Checkout config
+        uses: actions/checkout@v2
+        with:
+          repository: mkzelmo/zello-world
+          ref: ${{github.event.inputs.ProductVersion }}        
+          path: intelligencehub-config
+      
+      - name: looks at dirs
+        run: |
+          pwd
+          ls -l .
+          ls -l ./intelligencehub-runtime
+          ls -l ./intelligencehub-config
+          ls -l ..
+          ls -l ../..
+          
+      - name: Set config params
+        run: |
+          P_V=${{github.event.inputs.ProductVersion }}
+          export P_V
+          echo "P_V=$P_V" >> $GITHUB_ENV
+      
+      - name: Check Alpha
+        if: ${{ github.event.inputs.Stage != 'Alpha' }}
+        run: |
+          echo "Tagin for ${{ github.event.inputs.Stage }}"
+         
+      - name: P_V
+        run: |
+          echo "P_V:${{ env.P_V }}"
+          which dos2unix
+          
       - name: print env
         run: env | sort        
  
-
-          
