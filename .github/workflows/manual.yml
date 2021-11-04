@@ -8,7 +8,7 @@ on:
   #schedule:
     # * is a special character in YAML so you have to quote this string
    # - cron:  '9 9 * * 3'
-    
+   
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
@@ -37,23 +37,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Get version from Branch name
-      - name: Our Inputs
-        run: |
-          echo "ProductVersion: ${{ github.event.inputs.ProductVersion }}"
-          echo "BuildNumber: ${{ github.event.inputs.BuildNumber }}"
-          echo "Stage: ${{ github.event.inputs.Stage }}"
-          echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-          echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      
+      # Get version from Branch name      
       - name: version from Branch
         run: |
           ver=`echo ${{ github.ref }} | sed -n -e "s/^refs\/heads\/\(.*\)$/\1/p"`
           echo "ver: $ver"
           echo "ver_from_branch=$ver" >> $GITHUB_ENV
-      
-      #- name: print env
-      #  run: env | sort        
       
       - name: Env Var ver_from_branch
         run: |
@@ -105,6 +94,7 @@ jobs:
         run: |
           echo "P_V:${{ env.P_V }}"
           which dos2unix
- 
-
           
+      - name: print env
+        run: env | sort        
+ 
