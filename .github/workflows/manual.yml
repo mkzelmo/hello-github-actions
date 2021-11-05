@@ -16,6 +16,7 @@ on:
         # Friendly description to be shown in the UI
         description: 'Product Version (Must be same as Branch Name)'
         # Input has to be provided for the workflow to run
+        default: "2.1.0"
         required: true
       BuildNumber:
         # Friendly description to be shown in the UI
@@ -94,7 +95,7 @@ jobs:
         run: |
           echo "P_V:${{ env.P_V }}"
           
-          cd ./intelligencehub-runtime
+          cd ./intelligencehub-config
           cat ./file_1.txt
           dos2unix -k ./file_1.txt
           
