@@ -38,6 +38,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: install dos2unix
+        run: |
+          sudo apt-get update
+          sudo apt-get install dos2unix
+          
       # Get version from Branch name      
       - name: version from Branch
         run: |
@@ -97,7 +102,9 @@ jobs:
           
           cd ./intelligencehub-config
           cat ./file_1.txt
+          dos2unix -h
           dos2unix -k ./file_1.txt
+          unix2dos -k ./file_1.txt
           
       - name: print env
         run: env | sort        
