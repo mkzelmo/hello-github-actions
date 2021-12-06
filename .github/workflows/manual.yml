@@ -16,6 +16,7 @@ on:
         # Friendly description to be shown in the UI
         description: 'Product Version (Must be same as Branch Name)'
         # Input has to be provided for the workflow to run
+        default: "2.1.0"
         required: true
       BuildNumber:
         # Friendly description to be shown in the UI
@@ -37,6 +38,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: install dos2unix
+        run: |
+          sudo apt-get update
+          sudo apt-get install dos2unix
+          
       # Get version from Branch name      
       - name: version from Branch
         run: |
@@ -93,7 +99,12 @@ jobs:
       - name: P_V
         run: |
           echo "P_V:${{ env.P_V }}"
-          which dos2unix
+          
+          cd ./intelligencehub-config
+          cat ./file_1.txt
+          dos2unix -h
+          dos2unix -k ./file_1.txt
+          unix2dos -k ./file_1.txt
           
       - name: print env
         run: env | sort        
