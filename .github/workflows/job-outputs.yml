@@ -29,7 +29,7 @@ jobs:
           echo "ver: $ver"
           # set as env var and job output
           echo "ver_from_branch=$ver" >> $GITHUB_ENV
-          run: echo "::set-output name=ver_from_branch::$ver"
+          echo "::set-output name=ver_from_branch::$ver"
         
       - name: step2
         id: step2
