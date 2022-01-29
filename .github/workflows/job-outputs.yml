@@ -25,7 +25,7 @@ jobs:
       - name: step1
         id: step1
         run: |
-          ver=1.2.3
+          ver='1.2.3'
           echo "ver: $ver"
           # set as env var and job output
           echo "ver_from_branch=$ver" >> $GITHUB_ENV
