@@ -16,9 +16,15 @@ jobs:
     runs-on: ubuntu-latest
     
     # Map a step output to a job output
-    # prefix format: <job name>-out-<output name>
+    #
+    #   These outputs should be used by All Downstream jobs in place of env var with same name in this 
+    #   primary job. i.e. Use ${{needs.job1.outputs.out-ver_from_branch}} in place of ${{ env.ver_from_branch }}
+    #
+    #   prefix format: out-<output name>
+    #     Note: prefix needed because you can't have "outputs: <output name>:" and
+    #           "::set-output name=<output name>" be the same.
     outputs:
-      job1-out-ver_from_branch: ${{ steps.step1.outputs.ver_from_branch }}
+      out-ver_from_branch: ${{ steps.step1.outputs.ver_from_branch }}
       output2: ${{ steps.step2.outputs.test }}
       
     steps:
@@ -27,13 +33,16 @@ jobs:
         run: |
           ver='1.2.3'
           echo "ver: $ver"
+          
           # set as env var and job output
           echo "ver_from_branch=$ver" >> $GITHUB_ENV
           echo "::set-output name=ver_from_branch::$ver"
         
       - name: step2
         id: step2
-        run: echo "::set-output name=test::world"
+        run: |
+          echo "env.ver_from_branch: " ${{ env.ver_from_branch }}
+          echo "::set-output name=test::world"
       
       - name: print env
         run: env | sort        
@@ -42,9 +51,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: job1
     steps:
-      - name: job1 outputs
+      - name: Look at job1 outputs
+        # job1 outputs should be used in place of env var with same name in job1 by ALL
+        # Downstream jobs.
         run: |
-          echo "job1-out-ver_from_branch: " ${{needs.job1.outputs.job1-out-ver_from_branch}} 
+          # Use ${{needs.job1.outputs.out-ver_from_branch}} in place of ${{ env.ver_from_branch }}
+          echo "out-ver_from_branch: " ${{needs.job1.outputs.out-ver_from_branch}} 
           echo "job1.outputs.output2: " ${{needs.job1.outputs.output2}}
       
       - name: print env
